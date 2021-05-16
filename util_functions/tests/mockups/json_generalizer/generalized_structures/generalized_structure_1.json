@@ -1,0 +1,8 @@
+{"reference": 
+              {
+                "negative": {"original": "<str>"}, 
+                "positive": {"original": "<str>"}
+              }, 
+          "document": 
+              {"original": "<str>"}
+            }

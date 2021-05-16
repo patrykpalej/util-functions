@@ -1,0 +1,2 @@
+[{"a": "<int>", "b": "<int_list>", "c": {"d": "<float_list>", "e": "<str_list>"}},
+ {"a": "<int>", "b": "<int_list>", "c": {"d": "<multitype_list>", "e": "<str_list>"}}]
