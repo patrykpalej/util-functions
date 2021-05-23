@@ -7,8 +7,8 @@ from util_functions import JsonGeneralizer
 
 @pytest.fixture(scope='module')
 def mockups():
-    inputs_path_str = 'util_functions/tests/mockups/json_generalizer/inputs'
-    structures_path_str = 'util_functions/tests/mockups/json_generalizer' \
+    inputs_path_str = 'tests/mockups/json_generalizer/inputs'
+    structures_path_str = 'tests/mockups/json_generalizer' \
                           '/generalized_structures'
     
     inputs_path = Path(inputs_path_str)

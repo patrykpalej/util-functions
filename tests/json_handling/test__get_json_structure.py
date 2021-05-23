@@ -7,8 +7,8 @@ from util_functions import get_json_structure
 
 @pytest.fixture(scope='module')
 def mockups():
-    inputs_path_str = 'util_functions/tests/mockups/json_generalizer/inputs'
-    structures_path_str = 'util_functions/tests/mockups/json_generalizer' \
+    inputs_path_str = 'tests/mockups/json_generalizer/inputs'
+    structures_path_str = 'tests/mockups/json_generalizer' \
                           '/generalized_structures'
 
     inputs_path = Path(inputs_path_str)
@@ -37,7 +37,7 @@ def test__json_structure_from_object(mockups):
 
 
 def test__json_structure_from_path(mockups):
-    path_to_mockups = "util_functions/tests/mockups/json_generalizer/inputs"
+    path_to_mockups = "tests/mockups/json_generalizer/inputs"
     mockup_paths = [Path(path_to_mockups).joinpath(f"input_{i}.json")
                     for i in range(1, 7)]
     expected_structures = mockups["structures"]
