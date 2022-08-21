@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 VERSION = "1.0.0"
 
@@ -7,6 +7,6 @@ setup(
   version=VERSION,
   author="Patryk Palej",
   description="Repository contains utility functions which perform commonly needed operations ",
-  packages=["util_functions"],
+  packages=find_packages(),
   install_requires=["numpy", "pandas"]
 )
