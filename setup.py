@@ -8,5 +8,5 @@ setup(
   author="Patryk Palej",
   description="Repository contains utility functions which perform commonly needed operations ",
   packages=["util_functions"],
-  install_requires=["numpy"]
+  install_requires=["numpy", "pandas"]
 )
