@@ -28,7 +28,7 @@ def test__numpy_array():
 
 def test__mixed_list():
     mixed_list = [1, '2', 3.5, 4, 5.1]
-    with pytest.raises(TypeError, match="'list_' should .* numeric values"):
+    with pytest.raises(TypeError, match="'collection' should .* numeric values"):
         gini_coefficient(mixed_list)
 
 
