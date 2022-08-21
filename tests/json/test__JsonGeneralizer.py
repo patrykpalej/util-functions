@@ -2,22 +2,21 @@ import json
 import pytest
 from pathlib import Path
 
-from util_functions import JsonGeneralizer
+from util_functions.json import JsonGeneralizer
 
 
 @pytest.fixture(scope='module')
 def mockups():
-    inputs_path_str = 'tests/mockups/json_generalizer/inputs'
-    structures_path_str = 'tests/mockups/json_generalizer' \
-                          '/generalized_structures'
+    inputs_path_str = 'tests/mockups/json/inputs'
+    structures_path_str = 'tests/mockups/json/generalized_structures'
     
     inputs_path = Path(inputs_path_str)
     structs_path = Path(structures_path_str)
 
-    inputs_paths_to_files = [item for item in sorted(inputs_path.iterdir()) 
+    inputs_paths_to_files = [item for item in sorted(inputs_path.iterdir())
                              if not item.name.startswith('.')]
     structs_paths_to_files = [item for item in sorted(structs_path.iterdir())
-                                 if not item.name.startswith('.')]
+                              if not item.name.startswith('.')]
     
     mockups_data = {"inputs": [], "structures": []}
     for input_, structure in zip(inputs_paths_to_files, structs_paths_to_files):

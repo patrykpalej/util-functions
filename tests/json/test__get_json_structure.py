@@ -2,27 +2,24 @@ import json
 import pytest
 from pathlib import Path
 
-from util_functions import get_json_structure
+from util_functions.json import get_json_structure
 
 
 @pytest.fixture(scope='module')
 def mockups():
-    inputs_path_str = 'tests/mockups/json_generalizer/inputs'
-    structures_path_str = 'tests/mockups/json_generalizer' \
-                          '/generalized_structures'
+    inputs_path_str = 'tests/mockups/json/inputs'
+    structures_path_str = 'tests/mockups/json/generalized_structures'
 
     inputs_path = Path(inputs_path_str)
     structures_path = Path(structures_path_str)
 
     inputs_paths_to_files = [item for item in sorted(inputs_path.iterdir())
                              if not item.name.startswith('.')]
-    structures_paths_to_files = [item for item in
-                                 sorted(structures_path.iterdir())
+    structures_paths_to_files = [item for item in sorted(structures_path.iterdir())
                                  if not item.name.startswith('.')]
 
     mockups_data = {"inputs": [], "structures": []}
-    for input_, structure in zip(inputs_paths_to_files,
-                                 structures_paths_to_files):
+    for input_, structure in zip(inputs_paths_to_files, structures_paths_to_files):
         with open(input_, "r") as f:
             mockups_data["inputs"].append(json.load(f))
         with open(structure, "r") as f:
@@ -37,9 +34,8 @@ def test__json_structure_from_object(mockups):
 
 
 def test__json_structure_from_path(mockups):
-    path_to_mockups = "tests/mockups/json_generalizer/inputs"
-    mockup_paths = [Path(path_to_mockups).joinpath(f"input_{i}.json")
-                    for i in range(1, 7)]
+    path_to_mockups = "tests/mockups/json/inputs"
+    mockup_paths = [Path(path_to_mockups).joinpath(f"input_{i}.json") for i in range(1, 7)]
     expected_structures = mockups["structures"]
 
     for path, structure in zip(mockup_paths, expected_structures):

@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import numpy as np
 
-from util_functions import gini_coefficient
+from util_functions.math import gini_coefficient
 
 
 def test__numeric_list():
