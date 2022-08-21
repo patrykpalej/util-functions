@@ -27,10 +27,8 @@ class JsonGeneralizer:
             >>> jg.generalize(dict_)
             {"a": "<str>", "b": {"c": "<int>"}}
         """
-        self.generalized_json = self.recurrent_parser(
-            copy.deepcopy(self.json_object))
-        self.generalized_json = self.postprocess_generalized_json(
-            self.generalized_json)
+        self.generalized_json = self.recurrent_parser(copy.deepcopy(self.json_object))
+        self.generalized_json = self.postprocess_generalized_json(self.generalized_json)
 
     def beautify_json(self, which):
         """
