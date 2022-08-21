@@ -3,12 +3,14 @@ import copy
 import pprint
 import pathlib
 
+__all__ = ["JsonGeneralizer", "get_json_structure"]
+
 
 class JsonGeneralizer:
     """
-    This class can transform any JSON structure to a general form which doesn't
-    have any specific values (string, int, lists etc.) but only indicates on
-    what type of value it is. Only the original keys are left unchanged.
+    This class can transform any JSON structure to a general form which doesn't have any
+    specific values (string, int, lists etc.) but only indicates on what type of value it is.
+    Only the original keys are left unchanged.
     """
 
     def __init__(self, json_object):
@@ -17,44 +19,34 @@ class JsonGeneralizer:
 
     def generalize(self):
         """
-        This method parses the original JSON object and creates a generalized
-        form of it.
+        This method parses the original JSON object and creates a generalized form of it.
 
         Example:
-            >>> jg = JsonGeneralizer()
             >>> dict_ = {"a": "hello world", "b": {"c": "3"}}
-            >>> jg.generalize(dict_)
+            >>> jg = JsonGeneralizer(dict_)
+            >>> jg.generalize()
             {"a": "<str>", "b": {"c": "<int>"}}
         """
-        self.generalized_json = self.recurrent_parser(
-            copy.deepcopy(self.json_object))
-        self.generalized_json = self.postprocess_generalized_json(
-            self.generalized_json)
+        self.generalized_json = self.recurrent_parser(copy.deepcopy(self.json_object))
+        self.generalized_json = self.postprocess_generalized_json(self.generalized_json)
 
     def beautify_json(self, which):
         """
-        This method returns the JSON transformed to a beautified string form.
-        It contains a parameter which determines which JSON is to be
-        beautified - original or generalized one.
+        This method returns the JSON transformed to a beautified string form. It contains
+        a parameter which determines which JSON is to be beautified - original or generalized one.
 
-        Parameters:
-        -----------
-        which: str
-            "original" or "generalized", depending on which JSON is to be beautifed
+        Args:
+        which (str): "original" or "generalized", depending on which JSON is to be beautifed
 
         Returns:
-        -------
-        str - beautified version of a JSON
-
+            (str) beautified version of a JSON
 
         Example:
-        ---------
-        >>> jg = JsonGeneralizer({...})
-        >>> print(jg.beautify_json('generalized'))
-
-        {   'document': {'original': '<str>'},
-            'reference': {   'negative': {'original': '<str>'},
-                             'positive': {'original': '<str>'}}}
+            >>> jg = JsonGeneralizer({...})
+            >>> print(jg.beautify_json('generalized'))
+            {   'document': {'original': '<str>'},
+                'reference': {   'negative': {'original': '<str>'},
+                                 'positive': {'original': '<str>'}}}
         """
 
         if which == "original":
@@ -68,10 +60,16 @@ class JsonGeneralizer:
     @staticmethod
     def recurrent_parser(struct):
         """
-        This static method takes a JSON structure and recurrently calls itself
-        to generalize all nested elements of the JSON.
+        This static method takes a JSON structure and recurrently calls itself to generalize all
+        nested elements of the JSON.
 
-        Examples:
+        Args:
+            struct (Union[List, Dict]): any JSON structure (a dict or a list)
+
+        Returns:
+            (Union[List, Dict]): the structure with one more level generalized
+
+        Example:
             >>> {"a": "hello world", "b": {"c": "3"}}
             {"a": "<str>", "b": {"c": "<int>"}}
         """
@@ -112,10 +110,15 @@ class JsonGeneralizer:
     @staticmethod
     def postprocess_generalized_json(struct):
         """
-        This static method performs postprocessing on generalized form
-        of the input JSON such as:
-        - removing duplicating multiple items (only two left to
-          indicate multiplicity)
+        This static method performs postprocessing on generalized form of the input JSON such as:
+        - removing duplicating multiple items (only two left to indicate multiplicity)
+        - ...
+
+        Args:
+            struct (Union[List, Dict]): generalized JSON
+
+        Returns:
+            (Union[List, Dict]): postprocessed generalized JSON
 
         Example:
             >>> [{"a": "<str>", "b": "<str>"}, {"a": "<str>", "b": "<str>"},
@@ -132,23 +135,19 @@ class JsonGeneralizer:
 
 def get_json_structure(json_or_path):
     """
-    This function generates structure of a JSON directly, without creating
-    any class instances.
+    This function generates structure of a JSON directly, without creating any class instances.
 
-    Parameters:
-        json_or_path : JSON or str or pathlib.Path
-            If the input parameter is interpreted as a path, then JSON file
-            loaded from this path is considered. Otherwise, input of this
-            function is treated as a JSON object directly
+    Args:
+        json_or_path (Union[List, Dict, str, pathlib.Path]):
+            If the input parameter is interpreted as a path, then JSON file loaded from this path
+            is considered. Otherwise, input of this function is treated as a JSON object directly
 
     Returns:
-        JSON
-            Structure of the input JSON
+        (Union[List, Dict]): Structure of the input JSON
 
     Examples:
         >>> get_json_structure({"a": [1, 2, 3], "b": "hello"})
         {"a": "<int_list>", "b": "<str>"}
-
         >>> get_json_structure('path/to/file.json')
         {"a": "<int>", "b": {"c": "<float_list>"}}
     """
@@ -162,8 +161,7 @@ def get_json_structure(json_or_path):
     elif isinstance(json_or_path, (list, dict)):
         input_ = json_or_path
     else:
-        raise TypeError("Input parameter must be a path "
-                        "to .json file or a JSON object")
+        raise TypeError("Input parameter must be a path to .json file or a JSON object")
 
     generalizer = JsonGeneralizer(input_)
     generalizer.generalize()

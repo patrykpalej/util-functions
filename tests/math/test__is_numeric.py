@@ -1,6 +1,6 @@
 import numpy as np
 
-from util_functions import is_numeric
+from util_functions.math import is_numeric
 
 
 def test__int():
