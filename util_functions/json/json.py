@@ -3,6 +3,8 @@ import copy
 import pprint
 import pathlib
 
+__all__ = ["JsonGeneralizer", "get_json_structure"]
+
 
 class JsonGeneralizer:
     """
@@ -19,7 +21,6 @@ class JsonGeneralizer:
         """
         This method parses the original JSON object and creates a generalized
         form of it.
-
         Example:
             >>> jg = JsonGeneralizer()
             >>> dict_ = {"a": "hello world", "b": {"c": "3"}}
@@ -36,22 +37,17 @@ class JsonGeneralizer:
         This method returns the JSON transformed to a beautified string form.
         It contains a parameter which determines which JSON is to be
         beautified - original or generalized one.
-
         Parameters:
         -----------
         which: str
             "original" or "generalized", depending on which JSON is to be beautifed
-
         Returns:
         -------
         str - beautified version of a JSON
-
-
         Example:
         ---------
         >>> jg = JsonGeneralizer({...})
         >>> print(jg.beautify_json('generalized'))
-
         {   'document': {'original': '<str>'},
             'reference': {   'negative': {'original': '<str>'},
                              'positive': {'original': '<str>'}}}
@@ -70,7 +66,6 @@ class JsonGeneralizer:
         """
         This static method takes a JSON structure and recurrently calls itself
         to generalize all nested elements of the JSON.
-
         Examples:
             >>> {"a": "hello world", "b": {"c": "3"}}
             {"a": "<str>", "b": {"c": "<int>"}}
@@ -116,7 +111,6 @@ class JsonGeneralizer:
         of the input JSON such as:
         - removing duplicating multiple items (only two left to
           indicate multiplicity)
-
         Example:
             >>> [{"a": "<str>", "b": "<str>"}, {"a": "<str>", "b": "<str>"},
                  {"a": "<str>", "b": "<str>"}, {"a": "<str>", "b": "<str>"}]
@@ -134,21 +128,17 @@ def get_json_structure(json_or_path):
     """
     This function generates structure of a JSON directly, without creating
     any class instances.
-
     Parameters:
         json_or_path : JSON or str or pathlib.Path
             If the input parameter is interpreted as a path, then JSON file
             loaded from this path is considered. Otherwise, input of this
             function is treated as a JSON object directly
-
     Returns:
         JSON
             Structure of the input JSON
-
     Examples:
         >>> get_json_structure({"a": [1, 2, 3], "b": "hello"})
         {"a": "<int_list>", "b": "<str>"}
-
         >>> get_json_structure('path/to/file.json')
         {"a": "<int>", "b": {"c": "<float_list>"}}
     """

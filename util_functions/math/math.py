@@ -1,6 +1,9 @@
 import numpy as np
 
 
+__all__ = ["gini_coefficient", "is_numeric"]
+
+
 def gini_coefficient(list_, precision: int = None):
     """
     This function calculates gini coefficient (index) for a list, series,
